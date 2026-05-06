@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPARSH Hospital - YouTube Audit | Qlarify Health</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,700;1,700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f5f5; --white: #ffffff;
+      --ink: #1a4a6b; --ink-light: #2c5f84;
+      --rust: #f07030; --rust-dk: #d05a18;
+      --rust-light: #f2a585; --rust-pale: #fdeee5;
+      --sage: #8FA68B; --border: #c8d8e4;
+      --alt: #e8eef3;
+      --shadow: rgba(26,74,107,.07);
+      --shadow-md: rgba(26,74,107,.13);
+      --ink-rgb: 26,74,107;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); line-height:1.6; }
+
+    /* NAV */
+    nav {
+      position:sticky; top:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 48px;
+      background:rgba(245,245,245,.96); backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-l { display:flex; align-items:center; gap:12px; }
+    .nav-l svg { height:34px; width:auto; }
+    .nav-sep { width:1px; height:24px; background:var(--border); }
+    .nav-tag { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.14em; color:var(--ink-light); }
+    .nav-r { display:flex; align-items:center; gap:7px; }
+    .live-dot { width:7px; height:7px; border-radius:50%; background:var(--rust); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(232,131,95,.6)} 70%{box-shadow:0 0 0 6px rgba(232,131,95,0)} 100%{box-shadow:0 0 0 0 rgba(232,131,95,0)} }
+    .nav-r span { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.12em; color:var(--rust); }
+
+    /* LAYOUT */
+    .page { max-width:1080px; margin:0 auto; padding:0 clamp(20px,4vw,48px); }
+    section { padding:clamp(40px,5vw,68px) clamp(20px,4vw,48px); }
+    hr { border:none; border-top:1px solid var(--border); }
+
+    /* HERO */
+    .hero { background:var(--cream); padding:clamp(52px,7vh,88px) clamp(20px,4vw,48px) clamp(36px,4vh,52px); border-bottom:1px solid var(--border); }
+    .hero-inner { max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 340px; gap:48px; align-items:start; }
+    .pill { display:inline-flex; align-items:center; gap:7px; background:var(--rust-pale); color:var(--rust-dk); padding:5px 13px; border-radius:100px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:18px; }
+    .pill::before { content:''; width:6px; height:6px; background:var(--rust); border-radius:50%; }
+    h1 { font-family:'Playfair Display',serif; font-size:clamp(28px,4vw,50px); font-weight:700; color:var(--ink); line-height:1.12; letter-spacing:-1px; margin-bottom:10px; }
+    h1 em { color:var(--rust); font-style:italic; }
+    .hero-sub { font-size:15px; color:var(--ink-light); max-width:520px; margin-bottom:24px; }
+    .verdict {
+      display:inline-flex; align-items:center; gap:10px;
+      background:var(--white); border:1px solid var(--border);
+      border-left:4px solid var(--rust);
+      padding:12px 18px; border-radius:12px;
+      font-size:14px; font-weight:600; color:var(--ink);
+    }
+    .verdict-icon { font-size:18px; }
+
+    /* KPI PANEL */
+    .kpi-panel { background:var(--white); border:1px solid var(--border); border-radius:18px; padding:22px; box-shadow:0 8px 32px var(--shadow-md); min-width:260px; }
+    .kpi-label { font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.18em; color:var(--ink-light); margin-bottom:14px; }
+    .kpi-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .kpi { background:var(--cream); border-radius:10px; padding:13px 12px; text-align:center; }
+    .kpi-n { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--ink); line-height:1; }
+    .kpi-n.bad { color:var(--rust); }
+    .kpi-d { font-size:10px; color:var(--ink-light); margin-top:3px; font-weight:500; }
+    .score-row { margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .score-row span { font-size:12px; color:var(--ink-light); }
+    .score-val { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; background:var(--rust-pale); color:var(--rust-dk); padding:3px 9px; border-radius:6px; }
+
+    /* TYPOGRAPHY */
+    .eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.18em; color:var(--rust); margin-bottom:6px; display:block; }
+    h2 { font-family:'Playfair Display',serif; font-size:clamp(20px,2.8vw,32px); font-weight:700; color:var(--ink); line-height:1.18; margin-bottom:6px; }
+    h2 em { color:var(--rust); font-style:italic; }
+    .sub { font-size:14px; color:var(--ink-light); margin-bottom:24px; max-width:580px; }
+
+    /* THE CORE PROBLEM */
+    .problem-bar {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:16px; margin-bottom:16px;
+    }
+    .problem-half {
+      background:var(--white); border:1px solid var(--border);
+      border-radius:14px; padding:20px 22px;
+    }
+    .problem-half.bad { border-left:4px solid #e74c3c; }
+    .problem-half.good { border-left:4px solid var(--sage); }
+    .ph-label { font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; margin-bottom:8px; }
+    .ph-label.bad { color:#c0392b; }
+    .ph-label.good { color:var(--sage); }
+    .ph-num { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--ink); }
+    .ph-desc { font-size:12px; color:var(--ink-light); margin-top:4px; }
+
+    /* 4-STAGE TABLE */
+    .tbl-wrap { overflow-x:auto; border-radius:14px; border:1px solid var(--border); box-shadow:0 4px 20px var(--shadow); }
+    table { width:100%; border-collapse:collapse; background:var(--white); font-size:13px; }
+    thead { background:var(--ink); }
+    thead th { padding:13px 16px; text-align:left; font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:rgba(255,255,255,.65); white-space:nowrap; }
+    tbody tr { border-bottom:1px solid var(--border); transition:background .12s; }
+    tbody tr:last-child { border-bottom:none; }
+    tbody tr:hover { background:var(--rust-pale); }
+    td { padding:14px 16px; vertical-align:middle; }
+    .fw7 { font-weight:700; color:var(--ink); }
+    .txt-sm { font-size:11px; color:var(--ink-light); margin-top:2px; }
+
+    /* badges */
+    .badge { display:inline-block; padding:3px 9px; border-radius:100px; font-size:10px; font-weight:700; font-family:'JetBrains Mono',monospace; }
+    .b-red    { background:#fff0f0; color:#c0392b; }
+    .b-amber  { background:#fff8e6; color:#a07000; }
+    .b-green  { background:#eef3ec; color:#3d7a40; }
+    .b-navy   { background:var(--alt); color:var(--ink); }
+    .b-rust   { background:var(--rust-pale); color:var(--rust-dk); }
+
+    /* bar */
+    .bar { background:var(--alt); border-radius:100px; height:7px; width:100px; display:inline-block; vertical-align:middle; }
+    .bar-f { height:7px; border-radius:100px; }
+
+    /* stars */
+    .stars { color:var(--rust); font-size:12px; letter-spacing:1px; }
+
+    /* TWO-COL */
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+    /* INSIGHT CARD */
+    .ic { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:20px; }
+    .ic-head { font-size:14px; font-weight:700; color:var(--ink); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .ic-head span { font-size:18px; }
+    .ic-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .ic-list li { font-size:13px; color:var(--ink-light); display:flex; gap:8px; align-items:flex-start; }
+    .ic-list li::before { content:'→'; color:var(--rust); font-weight:700; flex-shrink:0; margin-top:1px; }
+
+    /* COMPETITOR ROW */
+    .comp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .comp-card { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:18px 16px; }
+    .comp-card.highlight { border-color:var(--rust); border-width:2px; background:var(--rust-pale); }
+    .comp-name { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:10px; }
+    .comp-name.you { color:var(--rust-dk); }
+    .comp-stat { display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px; }
+    .comp-stat .label { color:var(--ink-light); }
+    .comp-stat .val { font-weight:700; color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:11px; }
+    .comp-stat .val.bad { color:#c0392b; }
+    .comp-stat .val.good { color:var(--sage); }
+
+    /* VIDEO TABLE */
+    .vid-tag { display:inline-block; padding:2px 8px; border-radius:100px; font-size:9px; font-weight:700; font-family:'JetBrains Mono',monospace; }
+
+    /* ACTION ITEMS */
+    .actions { display:flex; flex-direction:column; gap:10px; }
+    .action { display:grid; grid-template-columns:32px 1fr auto; gap:14px; align-items:start; background:var(--white); border:1px solid var(--border); border-radius:13px; padding:16px 18px; transition:border-color .2s, transform .2s; }
+    .action:hover { border-color:var(--rust); transform:translateX(4px); }
+    .action-num { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--rust); padding-top:1px; }
+    .action-title { font-size:14px; font-weight:700; color:var(--ink); margin-bottom:3px; }
+    .action-desc { font-size:12px; color:var(--ink-light); line-height:1.5; }
+    .action-impact { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; white-space:nowrap; padding-top:2px; }
+    .impact-high { color:var(--rust-dk); }
+    .impact-med  { color:#a07000; }
+
+    /* IDEA CARDS */
+    .ideas-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+    .idea-card { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:18px 18px; }
+    .idea-num { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--rust); margin-bottom:6px; }
+    .idea-title { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+    .idea-why { font-size:12px; color:var(--ink-light); line-height:1.5; }
+    .idea-tag { display:inline-block; margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; padding:2px 8px; border-radius:100px; }
+
+    /* CTA */
+    .cta-strip { background:var(--ink); padding:clamp(36px,5vw,60px) clamp(20px,4vw,48px); }
+    .cta-in { max-width:1080px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+    .cta-h { font-family:'Playfair Display',serif; font-size:clamp(22px,3vw,36px); font-weight:700; color:#fff; line-height:1.18; }
+    .cta-h em { color:var(--rust-light); }
+    .cta-p { font-size:14px; color:rgba(255,255,255,.65); margin-top:6px; }
+    .btn { background:#fff; color:var(--ink); padding:13px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none; display:inline-block; white-space:nowrap; transition:transform .2s, box-shadow .2s; }
+    .btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,.2); }
+
+    /* FOOTER */
+    footer { background:var(--cream); border-top:1px solid var(--border); padding:24px clamp(20px,4vw,48px); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    footer svg { height:30px; width:auto; }
+    .foot-copy { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--ink-light); letter-spacing:.08em; }
+
+    /* HEALTH BADGE */
+    .yt-health { display:inline-flex; align-items:center; gap:6px; background:#eef3ec; border:1px solid #8FA68B; color:#3d7a40; padding:4px 12px; border-radius:100px; font-size:11px; font-weight:700; margin-left:12px; }
+    .yt-health::before { content:'✓'; font-weight:900; }
+
+    /* TAB SYSTEM */
+    .tab-bar {
+      position:sticky; top:58px; z-index:99;
+      background:rgba(245,245,245,.96); backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+      padding:0 48px; display:flex; gap:0;
+    }
+    .tab-btn {
+      font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700;
+      text-transform:uppercase; letter-spacing:.12em; color:var(--ink-light);
+      padding:14px 22px; border:none; background:none; cursor:pointer;
+      border-bottom:3px solid transparent; transition:color .15s, border-color .15s;
+      margin-bottom:-1px;
+    }
+    .tab-btn.active { color:var(--ink); border-bottom-color:var(--rust); }
+    .tab-btn:hover { color:var(--ink); }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+
+    /* SNAPSHOT SPECIFICS */
+    .snap-metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px; }
+    .snap-metric { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:18px 16px; text-align:center; }
+    .snap-metric-n { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--ink); line-height:1; }
+    .snap-metric-n.bad { color:var(--rust-dk); }
+    .snap-metric-n.good { color:var(--sage); }
+    .snap-metric-d { font-size:11px; color:var(--ink-light); margin-top:5px; font-weight:500; line-height:1.4; }
+    .snap-decision { background:var(--rust-pale); border:1px solid var(--rust-light); border-left:4px solid var(--rust-dk); border-radius:12px; padding:16px 20px; margin-bottom:12px; }
+    .snap-decision-num { font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:var(--rust-dk); margin-bottom:5px; }
+    .snap-decision-title { font-size:14px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+    .snap-decision-desc { font-size:12px; color:var(--ink-light); line-height:1.5; }
+    .snap-two { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .snap-phase { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:18px 20px; }
+
+    @media(max-width:800px){
+      .tab-bar { padding:0 20px; }
+      .snap-metrics { grid-template-columns:repeat(2,1fr); }
+      .snap-two { grid-template-columns:1fr; }
+    }
+
+    @media(max-width:800px){
+      nav { padding:12px 20px; }
+      section { padding:36px 20px; }
+      .hero { padding:48px 20px 36px; }
+      .hero-inner { grid-template-columns:1fr; }
+      .kpi-panel { display:none; }
+      .two { grid-template-columns:1fr; }
+      .comp-grid { grid-template-columns:1fr; }
+      .problem-bar { grid-template-columns:1fr; }
+      .action { grid-template-columns:28px 1fr; }
+      .action-impact { display:none; }
+      .ideas-grid { grid-template-columns:1fr; }
+    }
+
+    /* ─── DESIGN ENHANCEMENTS ─── */
+
+    /* Hero gradient */
+    .hero { background:linear-gradient(138deg,#e8f1f8 0%,#f0f5fa 35%,#f5f5f5 70%) !important; }
+
+    /* Eyebrow left-bar accent */
+    .eyebrow { border-left:3px solid currentColor; padding-left:9px !important; }
+
+    /* Verdict — full-row treatment */
+    .verdict { border-radius:14px; padding:16px 22px; display:flex; width:100%; box-sizing:border-box; gap:12px; }
+
+    /* KPI panel subtle gradient */
+    .kpi-panel { background:linear-gradient(145deg,#ffffff 0%,#f4f9fd 100%); }
+
+    /* Score row pill */
+    .score-row { background:var(--cream); border-radius:10px; padding:10px 14px; margin-top:14px; }
+
+    /* Snap-metric hover lift */
+    .snap-metric { transition:transform .18s,box-shadow .18s; cursor:default; box-shadow:0 3px 14px rgba(26,74,107,.07); }
+    .snap-metric:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(26,74,107,.13); }
+    .snap-metric.is-bad { background:linear-gradient(140deg,#fff8f5 0%,#fff 100%); border-color:rgba(240,112,48,.3); }
+    .snap-metric.is-zero { background:linear-gradient(140deg,#fff5f5 0%,#fff 100%); border-color:rgba(192,57,43,.25); }
+    .snap-metric.is-good { background:linear-gradient(140deg,#f5fbf6 0%,#fff 100%); border-color:rgba(143,166,139,.35); }
+
+    /* Decision card ghost number + colour coding */
+    .snap-decision { overflow:hidden; position:relative; }
+    .snap-decision-ghost { position:absolute; bottom:-18px; right:14px; font-family:'Playfair Display',serif; font-size:100px; font-weight:700; line-height:1; pointer-events:none; user-select:none; opacity:.055; }
+    .snap-decision.d-redirect { border-left-color:var(--rust-dk); }
+    .snap-decision.d-flagship { border-left-color:var(--sage); background:linear-gradient(135deg,rgba(143,166,139,.04) 0%,transparent 100%); }
+    .snap-decision.d-activate { border-left-color:var(--ink); background:linear-gradient(135deg,rgba(26,74,107,.03) 0%,transparent 100%); }
+
+    /* Better card shadows */
+    .ic { box-shadow:0 2px 12px rgba(26,74,107,.06),0 1px 3px rgba(26,74,107,.04); transition:box-shadow .18s; }
+    .ic:hover { box-shadow:0 6px 24px rgba(26,74,107,.11); }
+    .action { box-shadow:0 2px 10px rgba(26,74,107,.06); }
+    .idea-card { box-shadow:0 2px 10px rgba(26,74,107,.05); transition:transform .18s,box-shadow .18s; }
+    .idea-card:hover { transform:translateY(-2px); box-shadow:0 7px 22px rgba(26,74,107,.12); }
+    .comp-card { box-shadow:0 2px 10px rgba(26,74,107,.06); transition:box-shadow .18s; }
+    .comp-card:hover { box-shadow:0 6px 20px rgba(26,74,107,.12); }
+    .snap-decision { transition:box-shadow .18s,transform .18s; }
+    .snap-decision:hover { box-shadow:0 6px 22px rgba(26,74,107,.1); transform:translateX(3px); }
+
+    /* Section heading breathing room */
+    .eyebrow { margin-bottom:8px !important; }
+    h2 { margin-bottom:12px !important; }
+
+    /* Footer gradient */
+    footer { background:linear-gradient(135deg,#f0f4f7 0%,#f5f5f5 100%); }
+
+    /* Tab bar refinement */
+    .tab-bar { box-shadow:0 1px 0 var(--border); }
+
+    /* CTA strip subtle texture */
+    .cta-strip { background-image:radial-gradient(circle at 80% 50%,rgba(240,112,48,.08) 0%,transparent 60%); }
+
+    /* Snap metric number sizing */
+    .snap-metric-n { font-size:clamp(30px,3.5vw,44px) !important; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-l">
+    <svg viewBox="0 0 240 90" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="4" width="44" height="44" rx="3" ry="3" fill="#1a4a6b"/>
+      <rect x="13" y="12" width="26" height="27" rx="3" ry="3" fill="#f5f5f5"/>
+      <line x1="44" y1="46" x2="57" y2="61" stroke="#1a4a6b" stroke-width="7" stroke-linecap="round"/>
+      <text x="62" y="38" font-family="'DM Sans',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="1" fill="#1a4a6b">LARIFY</text>
+      <text x="66" y="62" font-family="'DM Sans',Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="6" fill="#f07030">HEALTH</text>
+    </svg>
+    <div class="nav-sep"></div>
+    <span class="nav-tag">YouTube Audit - SPARSH Hospital</span>
+  </div>
+  <div class="nav-r">
+    <div class="live-dot"></div>
+    <span>April 2026</span>
+  </div>
+</nav>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="snapshot" onclick="switchTab('snapshot')">CMO Snapshot</button>
+  <button class="tab-btn" data-tab="full" onclick="switchTab('full')">Full Audit</button>
+</div>
+
+<!-- CMO SNAPSHOT TAB -->
+<div id="tab-snapshot" class="tab-content active">
+
+  <!-- SNAPSHOT HERO -->
+  <section class="hero" style="border-bottom:1px solid var(--border);">
+    <div class="hero-inner">
+      <div>
+        <div class="pill">CMO Snapshot · ~3 min read</div>
+        <h1>435K subscribers.<br><em>The audience is built. The conversion is broken.</em></h1>
+        <p class="hero-sub">SPARSH Hospital has scaled to 435K subscribers and 9.75M total views by publishing roughly 12 videos a week. The audience exists. The constraint is content mix — the catalog is dominated by doctor-introduction formats, while the procedure explainers, patient stories, and post-op series that move viewers toward booking a consultation remain underbuilt.</p>
+        <div class="verdict">
+          <span class="verdict-icon">◎</span>
+          The differentiated assets - SPARSH Vachana, Dr. Sharan Patil&apos;s clinical reputation, India&apos;s First 3D Printing Lab as a proof point, an international patient base - already exist. The 90-day path is reallocation, not invention - and a content audit to surface the patient-facing subset of each asset.
+        </div>
+      </div>
+      <div class="kpi-panel">
+        <div class="kpi-label">Channel at a Glance · April 2026</div>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-n">435K</div><div class="kpi-d">Subscribers</div></div>
+          <div class="kpi"><div class="kpi-n">9.75M</div><div class="kpi-d">Total Views</div></div>
+          <div class="kpi"><div class="kpi-n bad">2.2%</div><div class="kpi-d">Views : Subs Ratio</div></div>
+          <div class="kpi"><div class="kpi-n bad">~0.25%</div><div class="kpi-d">Est. Monthly Growth</div></div>
+        </div>
+        <div class="score-row">
+          <span>Channel Effectiveness Score</span>
+          <span class="score-val">3.2 / 10</span>
+        </div>
+        <div style="font-size:10px;color:var(--ink-light);margin-top:6px;line-height:1.4;">Scored across 6 dimensions: V:S ratio, upload efficiency, stage coverage balance, Shorts presence, regional language coverage, CTA completeness.</div>
+      </div>
+    </div>
+  </section>
+  <hr/>
+
+  <!-- SIGNAL METRICS -->
+  <section style="background:var(--white);">
+    <div class="page">
+      <span class="eyebrow">Four Numbers That Define the Opportunity</span>
+      <h2>The diagnosis in <em>plain numbers.</em></h2>
+      <div class="snap-metrics" style="margin-top:20px;">
+        <div class="snap-metric is-bad">
+          <div class="snap-metric-n bad">2.2%</div>
+          <div class="snap-metric-d">Views-to-subscriber ratio. Healthy hospital channels run 10-30%. SPARSH&apos;s subscribers are not consistently watching new uploads.</div>
+        </div>
+        <div class="snap-metric is-bad">
+          <div class="snap-metric-n bad">60%</div>
+          <div class="snap-metric-d">Share of catalog allocated to Stage 2 trust-building - dominated by &quot;Hospital | Dr | Specialty&quot; doctor-intro formats</div>
+        </div>
+        <div class="snap-metric is-good">
+          <div class="snap-metric-n good">9.3K</div>
+          <div class="snap-metric-d">Average views per video across 1,046 uploads. Top-performing procedure content reaches 4-5x this average.</div>
+        </div>
+        <div class="snap-metric is-zero">
+          <div class="snap-metric-n bad">0</div>
+          <div class="snap-metric-d">YouTube Shorts published. The fastest organic discovery surface on YouTube is currently unused.</div>
+        </div>
+      </div>
+      <div style="background:var(--alt); border-radius:12px; padding:14px 18px; font-size:13px; color:var(--ink-light);">
+        <strong style="color:var(--ink);">Note on estimates:</strong> Monthly growth rate figures are derived from channel analytics data and are not published benchmarks. Catalog composition percentages are based on content sampling and categorisation across the active upload period. Average view figures reflect lifetime views divided by total video count.
+      </div>
+    </div>
+  </section>
+  <hr/>
+
+  <!-- VIDEO AS INFRASTRUCTURE INFOGRAPHIC -->
+  <section style="background:var(--ink); padding:clamp(40px,5vw,68px) clamp(20px,4vw,48px);">
+    <div class="page">
+      <span class="eyebrow" style="color:var(--rust-light);">The Mental Model</span>
+      <h2 style="color:#fff; margin-bottom:6px;">Video as <em style="color:var(--rust-light);">infrastructure.</em></h2>
+      <!-- THE 4 STAGES AS INFRASTRUCTURE LAYERS -->
+      <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.18em; color:rgba(255,255,255,.4); margin-bottom:16px;">The 4 Infrastructure Layers — Every Patient Arrives at One of These</div>
+
+      <!-- Vertical pipeline infographic -->
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-radius:16px; overflow:hidden; position:relative;">
+
+        <!-- Stage 1 -->
+        <div style="background:linear-gradient(160deg,#163460 60%,#1a4a7a); padding:24px 20px 28px; position:relative; border-right:1px solid rgba(255,255,255,.1);">
+          <div style="position:absolute; top:0; left:0; right:0; height:5px; background:#f2c97a;"></div>
+          <div style="width:40px; height:40px; border-radius:12px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; color:#f2c97a; margin-bottom:5px;">Layer 1</div>
+          <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#fff; margin-bottom:8px; line-height:1.2;">Symptom Awareness</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.78); line-height:1.6; margin-bottom:14px;">Patients at home with a symptom — "maybe it's nothing." Pre-diagnosis, searching in patient language, not clinical terms.</div>
+          <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.45); margin-bottom:6px;">Content that works here</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.82); line-height:1.6; margin-bottom:14px;">"Do I need knee replacement?" · "Signs of spine problems" · "How do I know if my heart is weak?"</div>
+          <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:10px 12px; margin-bottom:16px;">
+            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#f2c97a; margin-bottom:4px;">CTA for this stage</div>
+            <div style="font-size:11px; color:rgba(255,255,255,.75); line-height:1.5;">"Watch next: What this surgery looks like at SPARSH →"</div>
+          </div>
+          <div style="padding-top:12px; border-top:1px solid rgba(255,255,255,.1);">
+            <div style="font-size:10px; font-weight:600; color:rgba(255,255,255,.45); margin-bottom:5px;">SPARSH catalog coverage</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="flex:1; height:5px; background:rgba(255,255,255,.12); border-radius:100px;"><div style="width:18%; height:5px; background:#f2c97a; border-radius:100px;"></div></div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:#f2c97a;">18%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div style="background:linear-gradient(160deg,#2a1a12 60%,#3d2518); padding:24px 20px 28px; position:relative; border-right:1px solid rgba(255,255,255,.1);">
+          <div style="position:absolute; top:0; left:0; right:0; height:5px; background:var(--rust);"></div>
+          <div style="width:40px; height:40px; border-radius:12px; background:rgba(240,112,48,.15); border:1px solid rgba(240,112,48,.35); display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f2a585" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; color:var(--rust-light); margin-bottom:5px;">Layer 2 · Over-indexed at 60%</div>
+          <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#fff; margin-bottom:8px; line-height:1.2;">Trust Building</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.78); line-height:1.6; margin-bottom:8px;">Patient has identified the procedure. Now deciding <em style="color:#fff;">who</em> to trust with it. One compelling doctor video earns the shortlist.</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.88); font-style:italic; line-height:1.5; margin-bottom:12px; border-left:2px solid var(--rust); padding-left:10px;">They're not looking for information. They're looking for permission to trust.</div>
+          <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.45); margin-bottom:6px;">Content that works here</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.82); line-height:1.6; margin-bottom:14px;">Procedure walk-throughs with surgeon · "What to expect" explainers · Doctor Q&A on specific conditions · Facility and OT walkthroughs</div>
+          <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:10px 12px; margin-bottom:16px;">
+            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--rust-light); margin-bottom:4px;">CTA for this stage</div>
+            <div style="font-size:11px; color:rgba(255,255,255,.75); line-height:1.5;">"See how our patients recovered →" · "Watch a patient's journey"</div>
+          </div>
+          <div style="padding-top:12px; border-top:1px solid rgba(255,255,255,.1);">
+            <div style="font-size:10px; font-weight:600; color:rgba(255,255,255,.45); margin-bottom:5px;">SPARSH catalog coverage</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="flex:1; height:5px; background:rgba(255,255,255,.12); border-radius:100px;"><div style="width:60%; height:5px; background:var(--rust); border-radius:100px;"></div></div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--rust-light);">60%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div style="background:linear-gradient(160deg,#111f12 60%,#182419); padding:24px 20px 28px; position:relative; border-right:1px solid rgba(255,255,255,.1);">
+          <div style="position:absolute; top:0; left:0; right:0; height:5px; background:var(--sage);"></div>
+          <div style="width:40px; height:40px; border-radius:12px; background:rgba(143,166,139,.15); border:1px solid rgba(143,166,139,.35); display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a8c5a4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; color:var(--sage); margin-bottom:5px;">Layer 3</div>
+          <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#fff; margin-bottom:8px; line-height:1.2;">Decision</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.78); line-height:1.6; margin-bottom:14px;">Patient is comparing hospitals. Real patient stories answer the question no surgeon can: <em style="color:#fff;">"Was it worth it?"</em></div>
+          <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.45); margin-bottom:6px;">Content that works here</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.82); line-height:1.6; margin-bottom:14px;">Full patient journey videos · International patient testimonials · SPARSH Vachana stories · "Day 0 to Day 90" recovery narratives</div>
+          <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:10px 12px; margin-bottom:16px;">
+            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--sage); margin-bottom:4px;">CTA for this stage</div>
+            <div style="font-size:11px; color:rgba(255,255,255,.75); line-height:1.5;">"Book a consultation →" · WhatsApp link · International patient enquiry form</div>
+          </div>
+          <div style="padding-top:12px; border-top:1px solid rgba(255,255,255,.1);">
+            <div style="font-size:10px; font-weight:600; color:rgba(255,255,255,.45); margin-bottom:5px;">SPARSH catalog coverage</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="flex:1; height:5px; background:rgba(255,255,255,.12); border-radius:100px;"><div style="width:17%; height:5px; background:var(--sage); border-radius:100px;"></div></div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--sage);">17%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div style="background:linear-gradient(160deg,#1d1020 60%,#261430); padding:24px 20px 28px; position:relative;">
+          <div style="position:absolute; top:0; left:0; right:0; height:5px; background:#9b59b6;"></div>
+          <div style="width:40px; height:40px; border-radius:12px; background:rgba(155,89,182,.15); border:1px solid rgba(155,89,182,.35); display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c39bd3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; color:#c39bd3; margin-bottom:5px;">Layer 4 · Most under-built</div>
+          <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#fff; margin-bottom:8px; line-height:1.2;">Post-procedure Clarity</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.78); line-height:1.6; margin-bottom:14px;">Existing patients in recovery. High watch-time, high trust. Also SPARSH's most powerful referral engine — a patient who feels held post-surgery refers two more.</div>
+          <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.45); margin-bottom:6px;">Content that works here</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.82); line-height:1.6; margin-bottom:14px;">Week-by-week recovery guides · Physiotherapy milestones · "What's normal after knee surgery?" · Diet and wound care by procedure</div>
+          <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:10px 12px; margin-bottom:16px;">
+            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#c39bd3; margin-bottom:4px;">CTA for this stage</div>
+            <div style="font-size:11px; color:rgba(255,255,255,.75); line-height:1.5;">"Download your recovery guide →" · "Speak to your care coordinator"</div>
+          </div>
+          <div style="padding-top:12px; border-top:1px solid rgba(255,255,255,.1);">
+            <div style="font-size:10px; font-weight:600; color:rgba(255,255,255,.45); margin-bottom:5px;">SPARSH catalog coverage</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="flex:1; height:5px; background:rgba(255,255,255,.12); border-radius:100px;"><div style="width:5%; height:5px; background:#9b59b6; border-radius:100px;"></div></div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:#c39bd3;">5%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <hr style="border-color:rgba(255,255,255,.08);"/>
+
+  <!-- COMPETITIVE POSITION -->
+  <section style="background:var(--white);">
+    <div class="page">
+      <span class="eyebrow">Competitive Position</span>
+      <h2>Largest subscriber base in the peer set. <em>Slowest growth velocity.</em></h2>
+      <p class="sub">SPARSH leads Apollo, Manipal, and Fortis on raw subscriber count. The growth rate, view efficiency, and category authority signals tell a different story - peers publishing fewer videos are converting attention into appointments more efficiently.</p>
+      <div class="tbl-wrap" style="margin-top:20px;">
+        <table>
+          <thead>
+            <tr><th>Channel</th><th>Subscribers</th><th>Total Views</th><th>Upload Rate</th><th>Est. Monthly Growth</th><th>Content Approach</th></tr>
+          </thead>
+          <tbody>
+            <tr style="background:var(--rust-pale);">
+              <td class="fw7" style="color:var(--rust-dk);">SPARSH Hospital ◀</td>
+              <td class="fw7">435K</td>
+              <td class="fw7">~9.75M</td>
+              <td style="color:#c0392b;font-weight:700;">~52/month</td>
+              <td style="color:#c0392b;font-weight:700;">~0.25% est.</td>
+              <td><span class="badge b-amber">Doctor-intro heavy</span></td>
+            </tr>
+            <tr>
+              <td class="fw7">Apollo Hospitals</td>
+              <td>~405K</td>
+              <td>~162M</td>
+              <td>~91/month</td>
+              <td style="color:var(--sage);font-weight:700;">~0.6% est.</td>
+              <td><span class="badge b-green">Education-led</span></td>
+            </tr>
+            <tr>
+              <td class="fw7">Manipal Hospitals</td>
+              <td>~346K</td>
+              <td>~127.9M</td>
+              <td>~20/month</td>
+              <td style="font-weight:700;">~0.5% est.</td>
+              <td><span class="badge b-navy">Mixed</span></td>
+            </tr>
+            <tr>
+              <td class="fw7">Fortis</td>
+              <td>~120K</td>
+              <td>~30M</td>
+              <td>~25/month</td>
+              <td style="font-weight:700;">~0.4% est.</td>
+              <td><span class="badge b-navy">Mixed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:12px; font-size:11px; color:var(--ink-light); font-style:italic;">Growth rate figures are estimates based on channel analytics data, not published benchmarks. Apollo and Manipal figures sourced via vidIQ (November 2025) — six months prior to this document. SPARSH figures are current as of April 2026. Fortis view total is a working estimate from public channel data.</div>
+    </div>
+  </section>
+  <hr/>
+
+  <!-- THREE DECISIONS -->
+  <section>
+    <div class="page">
+      <span class="eyebrow">The Three Decisions</span>
+      <h2>What changes in <em>the next 90 days.</em></h2>
+      <p class="sub">Each decision is independently executable. Together they reorient the channel toward procedure-led, appointment-intent content — and activate the assets SPARSH already owns.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:20px;">
+        <div class="snap-decision d-redirect">
+          <div class="snap-decision-num">Decision 01 · Redirect</div>
+          <div class="snap-decision-title">Redirect the production calendar — procedure-led content instead of doctor-intro format</div>
+          <div class="snap-decision-desc">60% of uploads follow the "Hospital | Dr | Specialty" format, averaging 233–900 views per video. The same production capacity redirected to procedure explainers and patient stories — 16 focused long-form videos plus 5 Shorts/week from existing footage — generates materially more total views at the same cost. No new spend required.</div>
+          <div class="snap-decision-ghost">01</div>
+        </div>
+        <div class="snap-decision d-flagship">
+          <div class="snap-decision-num">Decision 02 · Flagship</div>
+          <div class="snap-decision-title">Commission the SPARSH Vachana documentary — Q3 2026 release window</div>
+          <div class="snap-decision-desc">No peer hospital runs an equivalent surgical-charity programme. One 25–40 minute documentary — four to six patient journeys, one production commitment — creates a flagship content asset no competitor can replicate. The commission decision is all that is needed; patient access and production infrastructure are already in place.</div>
+          <div class="snap-decision-ghost">02</div>
+        </div>
+        <div class="snap-decision d-activate">
+          <div class="snap-decision-num">Decision 03 · Activate</div>
+          <div class="snap-decision-title">Activate the existing catalog and claim the Kannada first-mover position</div>
+          <div class="snap-decision-desc">Two moves at near-zero cost: add stage-matched CTAs across all 1,046 video descriptions — Stage 1 content routes to the next procedure video, Stage 2 to patient stories, Stage 3 to the consultation form — turning 9.75M accumulated views into a guided patient journey rather than a dead end. And produce one Kannada knee-pain explainer. No peer hospital has Kannada health content. That window is open now.</div>
+          <div class="snap-decision-ghost">03</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr/>
+
+  <!-- 90-DAY OUTCOMES -->
+  <section style="background:var(--ink);">
+    <div class="page">
+      <span class="eyebrow" style="color:var(--rust-light);">Expected Outcomes</span>
+      <h2 style="color:#fff;">If the three decisions are made <em style="color:var(--rust-light);">this quarter.</em></h2>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px;">
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--rust-light);margin-bottom:8px;">Monthly Growth Rate</div>
+          <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff;line-height:1;">~0.25% → 1%+</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;">Based on peer channel performance at equivalent content mix. Not guaranteed - achievable under normal execution.</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--rust-light);margin-bottom:8px;">Avg Views Per Video</div>
+          <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff;line-height:1;">9.3K → 25K+</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;">Fewer, better-targeted videos increases per-video exposure and improves algorithmic distribution.</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--rust-light);margin-bottom:8px;">Flagship Production</div>
+          <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;line-height:1.1;">SPARSH Vachana documentary in production</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;">25-40 minute documentary, four to six patient journeys, Q3 2026 release window.</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--rust-light);margin-bottom:8px;">Views : Subscriber Ratio</div>
+          <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;line-height:1.1;">2.2% trajectory toward 8%+</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;">Subscribers re-engaging with new uploads is the leading indicator that the catalog is converting attention into appointment intent.</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:16px 18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;">
+        <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;">These are YouTube signals. The downstream target is OPD enquiry volume — the number of patients who move from watching to calling. At an 8% V:S ratio with aligned CTAs across the catalog, peer channel data indicates 3-5x the current monthly appointment inquiries from digital, without increasing ad spend.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SNAPSHOT CTA -->
+  <div class="cta-strip">
+    <div class="cta-in">
+      <div style="flex:1;">
+        <div class="cta-h">Busy marketing.<br><em>Quiet OPD?</em></div>
+        <p class="cta-p">For the complete video-level analysis, competitor benchmarking, search demand audit, and 10 high-impact video ideas, see the Full Audit tab.</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:14px;">Qlarify · 10+ years inside hospital marketing rooms · 17+ hospital partnerships · Manipal, Narayana, Sparsh, KIMS, Sakra.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:stretch;min-width:280px;max-width:320px;">
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:20px 22px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.35);margin-bottom:10px;">Next step</div>
+          <p style="font-size:14px;color:rgba(255,255,255,.88);line-height:1.55;margin:0 0 14px;font-style:italic;">If the diagnosis is clear enough — would it be useful to walk through a 90-day fix in 15 minutes?</p>
+          <div style="font-weight:700;color:var(--rust-light);font-size:14px;">info@qlarify.health</div>
+          <div style="font-weight:600;color:rgba(255,255,255,.65);font-size:13px;margin-top:4px;">+91 81474 10751</div>
+        </div>
+        <button onclick="switchTab('full')" style="background:#fff;color:var(--ink);padding:13px 26px;border-radius:100px;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;width:100%;">View Full Audit →</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end tab-snapshot -->
+
+<!-- FULL AUDIT TAB -->
+<div id="tab-full" class="tab-content">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="pill">CMO Brief · 6-min read</div>
+      <h1>435K subscribers.<br><em>1,046 videos. A 2.2% views-to-subscriber ratio.</em></h1>
+      <p class="hero-sub">One of India's largest hospital subscriber bases — built on upload volume. The assets to translate that scale into appointment intent already exist on the channel. The constraint is how they're being used.</p>
+      <div class="verdict">
+        <span class="verdict-icon">◎</span>
+        Channel intelligence: roughly 60% of uploads serve the doctor-introduction format. Procedure explainers and patient stories — the highest-performing categories — account for under one-fifth of the catalog combined.
+      </div>
+      <div style="margin-top:18px; background:var(--white); border:1px solid var(--border); border-radius:14px; padding:20px 22px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--rust);margin-bottom:12px;">Executive Summary</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="font-size:13px;color:var(--ink);"><strong>What the data shows:</strong> V:S ratio 2.2% — well below the 10-30% of healthy hospital channels, where each new upload reaches 10-30% of subscribers. Composition drives it: 60% doctor-intros, 18% procedures, 17% testimonials, 5% post-care. <em style="color:var(--ink-light);">(Stage percentages from content sampling across the active upload period — not automated classification.)</em></div>
+          <div style="font-size:13px;color:var(--ink);"><strong>The structural opportunity:</strong> SPARSH Vachana — charitable surgeries for underprivileged children — has no competitor parallel. No peer hospital can replicate it. It is currently untreated as a flagship content series.</div>
+          <div style="font-size:13px;color:var(--ink);"><strong>The proven format:</strong> Testimonials (Mauritius spine, Bangladesh cardiac) run 3-5x the doctor-intro average — verifiably patient-led audience. International patient content is SPARSH&apos;s highest-performing content type — and the most underused.</div>
+          <div style="font-size:13px;color:var(--ink);"><strong>The 90-day opportunity:</strong> Three decisions — redirect the production calendar from doctor-intros to procedure-led content, launch the Vachana documentary, activate the existing catalog with CTAs — can move estimated monthly growth from 0.25% toward 1%+ without increasing production spend.</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi-panel">
+      <div class="kpi-label">Channel at a Glance · April 2026</div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-n">435K</div><div class="kpi-d">Subscribers</div></div>
+        <div class="kpi"><div class="kpi-n">9.75M</div><div class="kpi-d">Total Views</div></div>
+        <div class="kpi"><div class="kpi-n">1,046</div><div class="kpi-d">Videos</div></div>
+        <div class="kpi"><div class="kpi-n">9.3K</div><div class="kpi-d">Avg Views/Video</div></div>
+        <div class="kpi"><div class="kpi-n bad">~12/wk</div><div class="kpi-d">Upload Rate</div></div>
+        <div class="kpi"><div class="kpi-n bad">2.2%</div><div class="kpi-d">V:S Ratio</div></div>
+      </div>
+      <div class="score-row">
+        <span>Channel Effectiveness Score</span>
+        <span class="score-val">3.2 / 10</span>
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- CHANNEL PERFORMANCE CONTEXT -->
+<section style="background:var(--white);">
+  <div class="page">
+    <span class="eyebrow">Channel Performance Context</span>
+    <h2>Largest subscriber base in the peer set.<br><em>Lowest views-to-subscriber ratio.</em></h2>
+    <p class="sub">Largest subscriber base in the peer set. Lowest V:S ratio. Upload volume and growth velocity are not correlated — more uploads is not the answer.</p>
+
+    <div class="problem-bar">
+      <div class="problem-half bad">
+        <div class="ph-label bad">Current Views-to-Subscriber Ratio</div>
+        <div class="ph-num">2.2%</div>
+        <div class="ph-desc">Average views per video (9.3K) ÷ subscribers (435K) = 2.2% V:S Ratio. Healthy hospital channels sit at 10-30% — meaning each new upload reaches 10-30% of the subscriber base. At 2.2%, most uploads reach fewer than 1-in-50 subscribers.</div>
+      </div>
+      <div class="problem-half good">
+        <div class="ph-label good">Attainable Target</div>
+        <div class="ph-num">8-12%</div>
+        <div class="ph-desc">At 435K subscribers, an 8% V:S ratio represents a 4x lift in lifetime view efficiency without needing a single new subscriber. This is consistent with peer channel performance and achievable through content rebalancing rather than production volume increases.</div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>SPARSH Hospital</th><th>Apollo Hospitals</th><th>Manipal Hospitals</th><th>Fortis</th><th>Context</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="fw7">Subscribers</td><td class="fw7" style="color:var(--sage);">435K</td><td>~405K</td><td>~346K</td><td>~120K</td><td><span class="badge b-green">SPARSH leads</span></td></tr>
+          <tr><td class="fw7">Total Views</td><td class="fw7" style="color:#c0392b;">~9.75M</td><td>~162M</td><td>~127.9M</td><td>~30M</td><td><span class="badge b-amber">Far below peers</span></td></tr>
+          <tr><td class="fw7">Video Count</td><td style="font-weight:700;">1,046</td><td>~4,000</td><td>~1,800</td><td>~1,200</td><td><span class="badge b-navy">Lower catalog volume</span></td></tr>
+          <tr><td class="fw7">Est. Monthly Growth</td><td style="color:#c0392b;font-weight:700;">~0.25%</td><td>~0.6%</td><td>~0.5%</td><td>~0.4%</td><td><span class="badge b-amber">Below peer range</span></td></tr>
+          <tr><td class="fw7">Upload Rate</td><td style="font-weight:700;">~52/month</td><td>~91/month</td><td>~20/month</td><td>~25/month</td><td><span class="badge b-navy">Volume vs. quality</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:8px;padding:8px 14px;background:var(--alt);border-radius:8px;font-size:11px;color:var(--ink-light);">Growth rate figures are estimates based on channel analytics data and are not published benchmarks. Apollo and Manipal figures sourced via vidIQ (November 2025). Fortis view total is a working estimate from public channel data.</div>
+
+    <div style="margin-top:16px; background:var(--alt); border-radius:14px; padding:18px 22px; border:1px solid var(--border);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--ink-light);margin-bottom:6px;">An Asset Worth Activating</div>
+      <div style="font-size:13px;color:var(--ink);">SPARSH Vachana, the 3D Printing Lab, and Dr. Patil&apos;s legacy footage are three differentiated assets — all underserving the patient audience they could reach. Vachana needs a documentary. The 3D Printing Lab needs a patient-story framing, not a technology promo. Dr. Patil&apos;s archive needs its patient-facing segments isolated from the surgical CME. <strong>Production capacity already exists.</strong></div>
+    </div>
+
+    <div style="margin-top:14px; background:var(--ink); border-radius:12px; padding:14px 18px;">
+      <div style="font-size:13px;color:rgba(255,255,255,.9);"><strong style="color:#fff;">Content mix is the lever.</strong> Not production volume.</div>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- THE CONTENT MIX -->
+<section style="background:var(--cream);">
+  <div class="page">
+    <span class="eyebrow">The Qlarify 4-Stage Patient Journey Framework</span>
+    <h2>1,046 videos mapped across <em>the patient decision journey</em></h2>
+    <p class="sub">Every piece of content a hospital publishes should serve one of four stages in the patient&apos;s journey. The distribution below shows where SPARSH&apos;s catalog currently sits, and where it needs to shift.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Content Types</th>
+            <th>Videos (Est.)</th>
+            <th>% of Catalog</th>
+            <th>Split</th>
+            <th>Avg Views</th>
+            <th>Effectiveness</th>
+            <th>Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="fw7" style="display:flex;align-items:center;gap:7px;">
+                <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#1a4a6b;flex-shrink:0;"></span>
+                Stage 1
+              </div>
+              <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--ink);margin-top:2px;">Symptom Awareness</div>
+              <div class="txt-sm">Conditions · Symptoms · Procedure Explainers · 3D Printing Lab content</div>
+              <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-light);margin-bottom:5px;">Specialty breakdown (est.)</div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:50%;height:4px;background:#1a4a6b;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Ortho &amp; Spine</span><span style="color:var(--ink-light);margin-left:auto;">~50% · ~94 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:20%;height:4px;background:#2c5f84;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Cardiology</span><span style="color:var(--ink-light);margin-left:auto;">~20% · ~38 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:15%;height:4px;background:#2c5f84;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Neurology</span><span style="color:var(--ink-light);margin-left:auto;">~15% · ~28 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:15%;height:4px;background:#c8d8e4;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink-light);font-weight:600;">Other</span><span style="color:var(--ink-light);margin-left:auto;">~15% · ~28 videos</span>
+                  </div>
+                </div>
+                <div style="margin-top:6px;font-size:10px;color:var(--rust);font-weight:600;">⚠ Oncology: 0 videos</div>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--ink-light);">Conditions, symptoms, procedure explainers that reach patients at moment of search</td>
+            <td><span style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">188</span></td>
+            <td><span class="badge b-navy">18%</span></td>
+            <td><div class="bar"><div class="bar-f" style="width:18%;background:#1a4a6b;"></div></div></td>
+            <td><span style="font-weight:700;color:var(--sage);">8K - 20K</span><div class="txt-sm">Highest avg. views</div></td>
+            <td><span class="stars">★★★★</span></td>
+            <td><span class="badge b-amber">Increase to 35%</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td>
+              <div class="fw7" style="display:flex;align-items:center;gap:7px;">
+                <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#f07030;flex-shrink:0;"></span>
+                Stage 2
+              </div>
+              <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--ink);margin-top:2px;">Trust Building</div>
+              <div class="txt-sm">Doctor Intros · Facility Tours · Specialist Q&amp;As · &quot;Hospital | Dr | Specialty&quot; format</div>
+              <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-light);margin-bottom:5px;">Specialty breakdown (est.)</div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:25%;height:4px;background:#f07030;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Ortho &amp; Spine</span><span style="color:var(--ink-light);margin-left:auto;">~25% · ~157 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:20%;height:4px;background:#f07030;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Cardiology</span><span style="color:var(--ink-light);margin-left:auto;">~20% · ~126 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:15%;height:4px;background:#f07030;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Neurology</span><span style="color:var(--ink-light);margin-left:auto;">~15% · ~94 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:15%;height:4px;background:#f07030;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">General Medicine</span><span style="color:var(--ink-light);margin-left:auto;">~15% · ~94 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:25%;height:4px;background:#fddbc7;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink-light);font-weight:600;">Other</span><span style="color:var(--ink-light);margin-left:auto;">~25% · ~157 videos</span>
+                  </div>
+                </div>
+                <div style="margin-top:6px;font-size:10px;color:var(--ink-light);">Doctor-intro format spread uniformly across all specialties — format is the issue, not the specialty.</div>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--ink-light);">Currently dominated by the &quot;Hospital | Dr | Specialty&quot; intro format</td>
+            <td><span style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">628</span></td>
+            <td><span class="badge b-rust">60%</span></td>
+            <td><div class="bar"><div class="bar-f" style="width:60%;background:#f07030;"></div></div></td>
+            <td>2K - 8K<div class="txt-sm">Doctor intros average 233-900</div></td>
+            <td><span class="stars" style="color:#c8d8e4;">★★</span></td>
+            <td><span class="badge b-amber">Rebalance to 25%</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="fw7" style="display:flex;align-items:center;gap:7px;">
+                <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#8FA68B;flex-shrink:0;"></span>
+                Stage 3
+              </div>
+              <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--ink);margin-top:2px;">Decision</div>
+              <div class="txt-sm">Patient Testimonials · International Patient Stories · SPARSH Vachana</div>
+              <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-light);margin-bottom:5px;">Specialty breakdown (est.)</div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:35%;height:4px;background:#8FA68B;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Ortho &amp; Spine</span><span style="color:var(--ink-light);margin-left:auto;">~35% · ~62 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:25%;height:4px;background:#8FA68B;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Cardiology</span><span style="color:var(--ink-light);margin-left:auto;">~25% · ~45 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:20%;height:4px;background:#8FA68B;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Paediatrics</span><span style="color:var(--ink-light);margin-left:auto;">~20% · ~36 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:20%;height:4px;background:#c8d8e4;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink-light);font-weight:600;">Other</span><span style="color:var(--ink-light);margin-left:auto;">~20% · ~35 videos</span>
+                  </div>
+                </div>
+                <div style="margin-top:6px;font-size:10px;color:var(--sage);font-weight:600;">↑ Mauritius (Spine) &amp; Bangladesh (Cardiac) over-index on views — highest-performing content by specialty</div>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--ink-light);">Content that converts a considering patient into a booked appointment</td>
+            <td><span style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">178</span></td>
+            <td><span class="badge b-green">17%</span></td>
+            <td><div class="bar"><div class="bar-f" style="width:17%;background:#8FA68B;"></div></div></td>
+            <td>3K - 12K<div class="txt-sm">Int&apos;l patient stories outperform doctor-intro format</div></td>
+            <td><span class="stars">★★★★</span></td>
+            <td><span class="badge b-amber">Grow to 30%</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="fw7" style="display:flex;align-items:center;gap:7px;">
+                <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#c8d8e4;flex-shrink:0;"></span>
+                Stage 4
+              </div>
+              <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--ink);margin-top:2px;">Post-procedure Clarity</div>
+              <div class="txt-sm">Recovery · Rehabilitation · Physiotherapy · Lifestyle</div>
+              <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-light);margin-bottom:5px;">Specialty breakdown (est.)</div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:55%;height:4px;background:#8FA68B;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Ortho &amp; Physio</span><span style="color:var(--ink-light);margin-left:auto;">~55% · ~29 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:20%;height:4px;background:#c8d8e4;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Cardiology</span><span style="color:var(--ink-light);margin-left:auto;">~20% · ~10 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:15%;height:4px;background:#c8d8e4;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink);font-weight:600;">Neurology</span><span style="color:var(--ink-light);margin-left:auto;">~15% · ~8 videos</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;">
+                    <div style="width:52px;height:4px;background:var(--alt);border-radius:100px;flex-shrink:0;"><div style="width:10%;height:4px;background:#c8d8e4;border-radius:100px;"></div></div>
+                    <span style="color:var(--ink-light);font-weight:600;">Other</span><span style="color:var(--ink-light);margin-left:auto;">~10% · ~5 videos</span>
+                  </div>
+                </div>
+                <div style="margin-top:6px;font-size:10px;color:#c0392b;font-weight:600;">⚠ Spine recovery: 0 dedicated videos despite being top-volume procedure</div>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--ink-light);">Builds long-term loyalty and generates highest repeated viewership from existing patients</td>
+            <td><span style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">52</span></td>
+            <td><span class="badge b-red">5%</span></td>
+            <td><div class="bar"><div class="bar-f" style="width:5%;background:#c8d8e4;"></div></div></td>
+            <td style="color:#c0392b;font-weight:600;">&lt;600<div class="txt-sm">Smallest stage by views</div></td>
+            <td><span class="stars" style="color:#c8d8e4;">★</span></td>
+            <td><span class="badge b-amber">Grow to 10%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- target mix -->
+    <div style="margin-top:14px;background:var(--ink);border-radius:16px;padding:24px 28px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--rust-light);margin-bottom:16px;">Recommended content shift - target state</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.16em;margin-bottom:4px;">Stage 1</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.55);margin-bottom:4px;">Symptom Awareness</div>
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1;">35%</div>
+          <div style="font-size:11px;color:var(--rust-light);margin-top:2px;">up from 18%</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.16em;margin-bottom:4px;">Stage 2</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.55);margin-bottom:4px;">Trust Building</div>
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1;">25%</div>
+          <div style="font-size:11px;color:var(--rust-light);margin-top:2px;">down from 60%</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.16em;margin-bottom:4px;">Stage 3</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.55);margin-bottom:4px;">Decision</div>
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1;">30%</div>
+          <div style="font-size:11px;color:var(--rust-light);margin-top:2px;">up from 17%</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.16em;margin-bottom:4px;">Stage 4</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.55);margin-bottom:4px;">Post-procedure Clarity</div>
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1;">10%</div>
+          <div style="font-size:11px;color:var(--rust-light);margin-top:2px;">up from 5%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- VIDEO DATA -->
+<section style="background:var(--white);">
+  <div class="page">
+    <span class="eyebrow">What Actually Drives Views</span>
+    <h2>20-Video Sample - <em>The Pattern Is Consistent</em></h2>
+    <p class="sub">Across the sample, every high-performing video leads with a clear procedure, a specific patient outcome, or a verifiable technology claim. Every low-performer leads with a doctor name, an observance day, or an organisational announcement. The content type, not the production quality, determines the reach.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Video Title</th>
+            <th>Category</th>
+            <th>Est. Views</th>
+            <th>Format</th>
+            <th>CTR Signal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">01</td>
+            <td>
+              <div class="fw7">Robotic Knee Replacement Day Care - Patient Walks Same Day</div>
+              <div class="txt-sm">Procedure outcome · Day-care format</div>
+            </td>
+            <td><span class="badge b-navy">Awareness</span></td>
+            <td style="font-weight:700;color:var(--sage);">15K - 40K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Procedure</td>
+            <td><span class="badge b-green">High</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">02</td>
+            <td>
+              <div class="fw7">India&apos;s First 3D Printing Lab at SPARSH - Inside the Custom-Bone Workflow</div>
+              <div class="txt-sm">Technology PR · Verifiable claim · Audience skews B2B/press, not patients</div>
+            </td>
+            <td><span class="badge b-navy">Awareness</span></td>
+            <td style="font-weight:700;color:var(--sage);">8K - 20K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Technology</td>
+            <td><span class="badge b-green">High</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">03</td>
+            <td>
+              <div class="fw7">Mauritius Spine Patient Testimonial - From Diagnosis to Recovery at SPARSH</div>
+              <div class="txt-sm">International patient · 3-5x the doctor-intro average</div>
+            </td>
+            <td><span class="badge b-green">Decision</span></td>
+            <td style="font-weight:700;color:var(--sage);">5K - 12K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Testimonial</td>
+            <td><span class="badge b-green">High</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">04</td>
+            <td>
+              <div class="fw7">Dr. Sharan Patil 2019 Spine Lecture - Still Indexing After 7 Years</div>
+              <div class="txt-sm">Surgical-technique CME · Audience: surgeons/residents, not patients</div>
+            </td>
+            <td><span class="badge b-navy">Awareness</span></td>
+            <td style="font-weight:700;color:var(--sage);">10K - 30K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Lecture</td>
+            <td><span class="badge b-green">High</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">05</td>
+            <td>
+              <div class="fw7">Bangladesh Heart Patient Testimonial - Surgery and Return Home</div>
+              <div class="txt-sm">International patient · Medical tourism segment</div>
+            </td>
+            <td><span class="badge b-green">Decision</span></td>
+            <td style="font-weight:700;color:var(--sage);">4K - 10K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Testimonial</td>
+            <td><span class="badge b-green">High</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">06</td>
+            <td>
+              <div class="fw7">SPARSH Vachana Promo - Charitable Surgeries for Underprivileged Children</div>
+              <div class="txt-sm">Category-of-one programme · Promo edit</div>
+            </td>
+            <td><span class="badge b-green">Decision</span></td>
+            <td style="font-weight:700;color:var(--sage);">3K - 8K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Brand story</td>
+            <td><span class="badge b-amber">Medium-High</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">07</td>
+            <td>
+              <div class="fw7">Robotic Hip Replacement at SPARSH - What Recovery Looks Like</div>
+              <div class="txt-sm">Procedure + recovery overlap</div>
+            </td>
+            <td><span class="badge b-navy">Awareness</span></td>
+            <td style="font-weight:700;color:var(--sage);">8K - 18K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Procedure</td>
+            <td><span class="badge b-green">High</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">08</td>
+            <td>
+              <div class="fw7">Stroke - Time Is Brain - What To Do in the First 60 Minutes</div>
+              <div class="txt-sm">Time-sensitive condition · Search-aligned</div>
+            </td>
+            <td><span class="badge b-navy">Awareness</span></td>
+            <td style="font-weight:700;color:var(--sage);">5K - 12K</td>
+            <td style="font-size:12px;color:var(--ink-light);">Explainer</td>
+            <td><span class="badge b-green">High</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">09</td>
+            <td>
+              <div class="fw7">SPARSH Hospital, Yeshwanthpur | Dr. [Name] | Orthopedics</div>
+              <div class="txt-sm">Doctor-intro format · Most common upload pattern</div>
+            </td>
+            <td><span class="badge b-rust">Trust</span></td>
+            <td style="font-weight:700;color:#c0392b;">233 - 600</td>
+            <td style="font-size:12px;color:var(--ink-light);">Intro</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">10</td>
+            <td>
+              <div class="fw7">SPARSH Hospital | Dr. [Name] | Cardiology - Specialty Introduction</div>
+              <div class="txt-sm">Doctor-intro format · Repeated weekly</div>
+            </td>
+            <td><span class="badge b-rust">Trust</span></td>
+            <td style="font-weight:700;color:#c0392b;">300 - 900</td>
+            <td style="font-size:12px;color:var(--ink-light);">Intro</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">11</td>
+            <td>
+              <div class="fw7">SPARSH Hospital | Dr. [Name] | Neurology - Meet the Specialist</div>
+              <div class="txt-sm">Doctor-intro format · No procedure or outcome in title</div>
+            </td>
+            <td><span class="badge b-rust">Trust</span></td>
+            <td style="font-weight:700;color:#c0392b;">400 - 850</td>
+            <td style="font-size:12px;color:var(--ink-light);">Intro</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">12</td>
+            <td>
+              <div class="fw7">World Heart Day 2024 | SPARSH Hospital</div>
+              <div class="txt-sm">Observance day · Generic campaign</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;1,500</td>
+            <td style="font-size:12px;color:var(--ink-light);">Campaign</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">13</td>
+            <td>
+              <div class="fw7">World Kidney Day 2024 - Awareness | SPARSH Hospital</div>
+              <div class="txt-sm">Observance day · Generic campaign</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;1,200</td>
+            <td style="font-size:12px;color:var(--ink-light);">Campaign</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">14</td>
+            <td>
+              <div class="fw7">Father&apos;s Day Special | SPARSH Hospital</div>
+              <div class="txt-sm">Seasonal greeting · Sentimental</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;800</td>
+            <td style="font-size:12px;color:var(--ink-light);">Greeting</td>
+            <td><span class="badge b-red">Very Low</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">15</td>
+            <td>
+              <div class="fw7">Hospital Inauguration - SPARSH New Wing Opening</div>
+              <div class="txt-sm">Institutional milestone · Internal-facing</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;2,000</td>
+            <td style="font-size:12px;color:var(--ink-light);">Event</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">16</td>
+            <td>
+              <div class="fw7">CSR Initiative - SPARSH Community Health Camp</div>
+              <div class="txt-sm">CSR communications · Generic format</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;1,500</td>
+            <td style="font-size:12px;color:var(--ink-light);">CSR</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">17</td>
+            <td>
+              <div class="fw7">Diwali Greetings from SPARSH Hospital</div>
+              <div class="txt-sm">Seasonal greeting · No clinical content</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;700</td>
+            <td style="font-size:12px;color:var(--ink-light);">Greeting</td>
+            <td><span class="badge b-red">Very Low</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">18</td>
+            <td>
+              <div class="fw7">SPARSH Hospital - New Facility Expansion Announcement</div>
+              <div class="txt-sm">Institutional announcement</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;1,500</td>
+            <td style="font-size:12px;color:var(--ink-light);">Announcement</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink-light);font-size:12px;">19</td>
+            <td>
+              <div class="fw7">Latest Technology at SPARSH - Generic Promo</div>
+              <div class="txt-sm">Technology promo without specific use case</div>
+            </td>
+            <td><span class="badge b-rust">Brand</span></td>
+            <td style="font-weight:700;color:#c0392b;">&lt;1,000</td>
+            <td style="font-size:12px;color:var(--ink-light);">Promo</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+          <tr style="background:#fffbf9;">
+            <td style="color:var(--ink-light);font-size:12px;">20</td>
+            <td>
+              <div class="fw7">SPARSH Hospital | Dr. [Name] | General Medicine - Brief Introduction</div>
+              <div class="txt-sm">Doctor-intro format · No specialty hook</div>
+            </td>
+            <td><span class="badge b-rust">Trust</span></td>
+            <td style="font-weight:700;color:#c0392b;">350 - 700</td>
+            <td style="font-size:12px;color:var(--ink-light);">Intro</td>
+            <td><span class="badge b-red">Low</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- WHAT WORKS -->
+<section style="background:var(--alt);">
+  <div class="page">
+    <span class="eyebrow">Performance Patterns</span>
+    <h2>Formats that compound - and <em>formats to reconsider</em></h2>
+    <p class="sub">The high performers and the low performers are produced with the same crew, on the same campus, by the same team. The only consistent variable is the content category itself.</p>
+
+    <div class="two">
+      <div class="ic">
+        <div class="ic-head"><span>📈</span> High-performing formats to expand</div>
+        <ul class="ic-list">
+          <li><strong>Procedure-led explainers (robotic knee replacement, hip replacement, stroke time-is-brain)</strong> consistently reach 5K-40K views. SPARSH&apos;s orthopaedic and spine programmes are especially well-suited to this format and currently underrepresented in the catalog.</li>
+          <li><strong>India&apos;s First 3D Printing Lab</strong> drives 8K-20K views per upload, but the audience skews toward press and B2B. The patient version — a specific surgical journey with the technology as proof point — converts an existing PR moat into appointment-generating content.</li>
+          <li><strong>Mauritius and Bangladesh patient testimonials</strong> run 3-5x the doctor-intro average. International patient narratives are the channel&apos;s highest-converting category. A structured medical-tourism pillar is the highest-confidence investment available.</li>
+          <li><strong>Dr. Sharan Patil&apos;s 2015-2019 lectures</strong> index and pull traffic years after publication, but the audience is surgeons and residents, not patients. Audit the footage for patient-facing segments before treating it as Shorts source material.</li>
+        </ul>
+      </div>
+      <div class="ic">
+        <div class="ic-head"><span>◎</span> Formats worth reconsidering</div>
+        <ul class="ic-list">
+          <li><strong>The &quot;Hospital | Dr | Specialty&quot; doctor-intro format</strong> averages 233-900 views per video. The doctors are excellent; the format is the issue. Reframing as procedure-led — &quot;What happens during a SPARSH knee replacement, with Dr. [Name]&quot; — keeps the clinician-trust signal and adds the search hook.</li>
+          <li><strong>Observance-day campaigns</strong> (World Heart Day, World Kidney Day) average under 1,500 views. These dates have content potential — but only when they carry specific, doctor-led clinical information rather than campaign branding.</li>
+          <li><strong>Seasonal greetings, inaugurations, and CSR campaigns</strong> consistently underperform on a patient-facing channel. Route these to LinkedIn, website, and email — where the audience is already aligned.</li>
+          <li><strong>Generic technology promos</strong> sit under 2,000 views. The same claim grounded in a specific patient story — &quot;This 3D-printed implant was designed for a 12-year-old&apos;s spine&quot; — outperforms by an order of magnitude.</li>
+        </ul>
+        <div style="margin-top:14px; background:var(--alt); border-radius:10px; padding:12px 14px; border:1px solid var(--border);">
+          <div style="font-size:12px;color:var(--ink);"><strong>On SPARSH Vachana:</strong> Operationally established. No flagship documentary yet. Patient access and institutional permission are in place. The decision to commission is the most evidence-supported investment available to the channel.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- COMPETITOR BENCHMARKING -->
+<section style="background:var(--white);">
+  <div class="page">
+    <span class="eyebrow">Where You Stand in the Market</span>
+    <h2>SPARSH <em>leads on subscribers - and trails on view efficiency</em></h2>
+    <p class="sub">Apollo runs at roughly 2.4x SPARSH&apos;s estimated monthly growth on a smaller subscriber base. Manipal achieves comparable growth on one-third the upload volume. The gap is content mix, not resource availability.</p>
+
+    <div class="comp-grid" style="margin-bottom:20px;">
+      <div class="comp-card highlight">
+        <div class="comp-name you">SPARSH Hospital</div>
+        <div class="comp-stat"><span class="label">Subscribers</span><span class="val good">435K</span></div>
+        <div class="comp-stat"><span class="label">Total Views</span><span class="val bad">~9.75M</span></div>
+        <div class="comp-stat"><span class="label">Videos</span><span class="val">1,046</span></div>
+        <div class="comp-stat"><span class="label">Upload/month</span><span class="val bad">~52</span></div>
+        <div class="comp-stat"><span class="label">Est. Monthly Growth</span><span class="val bad">~0.25%</span></div>
+        <div class="comp-stat"><span class="label">Avg Views/Video</span><span class="val">9.3K</span></div>
+        <div class="comp-stat"><span class="label">V:S Ratio</span><span class="val bad">2.2%</span></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-name">Apollo Hospitals</div>
+        <div class="comp-stat"><span class="label">Subscribers</span><span class="val">~405K</span></div>
+        <div class="comp-stat"><span class="label">Total Views</span><span class="val good">~162M</span></div>
+        <div class="comp-stat"><span class="label">Videos</span><span class="val">~4,000</span></div>
+        <div class="comp-stat"><span class="label">Upload/month</span><span class="val">~91 (est.)</span></div>
+        <div class="comp-stat"><span class="label">Est. Monthly Growth</span><span class="val good">~0.6%</span></div>
+        <div class="comp-stat"><span class="label">Avg Views/Video</span><span class="val good">~40K</span></div>
+        <div class="comp-stat"><span class="label">Regional language channels</span><span class="val">Active</span></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-name">Manipal Hospitals</div>
+        <div class="comp-stat"><span class="label">Subscribers</span><span class="val">~346K</span></div>
+        <div class="comp-stat"><span class="label">Total Views</span><span class="val">~127.9M</span></div>
+        <div class="comp-stat"><span class="label">Videos</span><span class="val">~1,800</span></div>
+        <div class="comp-stat"><span class="label">Upload/month</span><span class="val good">~20 (est.)</span></div>
+        <div class="comp-stat"><span class="label">Est. Monthly Growth</span><span class="val good">~0.5%</span></div>
+        <div class="comp-stat"><span class="label">Avg Views/Video</span><span class="val good">~71K</span></div>
+        <div class="comp-stat"><span class="label">Source</span><span class="val">vidIQ, Nov 2025</span></div>
+      </div>
+    </div>
+    <div style="margin-bottom:14px;padding:8px 14px;background:var(--alt);border-radius:8px;font-size:11px;color:var(--ink-light);">All figures except SPARSH&apos;s direct channel data are estimates from channel analytics. Apollo and Manipal reference data sourced via vidIQ (November 2025). Growth rates are not published benchmarks.</div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Content Mix</th><th>SPARSH</th><th>Apollo Hospitals</th><th>Manipal Hospitals</th><th>Observation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="fw7">Awareness / Procedures</td><td>18%</td><td>~30%</td><td>~25%</td><td><span class="badge b-green">Apollo / Manipal lead</span></td></tr>
+          <tr><td class="fw7">Brand &amp; Trust</td><td style="color:#c0392b;font-weight:700;">60%</td><td>~25%</td><td>~30%</td><td><span class="badge b-amber">SPARSH highest allocation</span></td></tr>
+          <tr><td class="fw7">Decision / Testimonials</td><td>17%</td><td>~30%</td><td>~30%</td><td><span class="badge b-amber">Significant gap</span></td></tr>
+          <tr><td class="fw7">Post-Treatment / Preventive</td><td style="color:#c0392b;font-weight:700;">5%</td><td>~15%</td><td>~15%</td><td><span class="badge b-amber">Significant opportunity</span></td></tr>
+          <tr><td class="fw7">YouTube Shorts</td><td style="color:#c0392b;font-weight:700;">None</td><td>Active</td><td>Active</td><td><span class="badge b-amber">Largest single gap</span></td></tr>
+          <tr><td class="fw7">Regional Language Content</td><td>Absent</td><td>6 regional channels</td><td>Hindi + 2 languages</td><td><span class="badge b-amber">First-mover window for Kannada</span></td></tr>
+          <tr style="background:var(--alt);">
+            <td class="fw7">Summary</td>
+            <td style="font-size:12px;color:var(--ink);">Rebalancing needed</td>
+            <td style="font-size:12px;color:var(--ink);">Strong mix, multi-channel</td>
+            <td style="font-size:12px;color:var(--ink);">High-quality, low-volume</td>
+            <td><span class="badge b-navy">Content mix is the lever</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- SEO GAPS -->
+<section style="background:var(--cream);">
+  <div class="page">
+    <span class="eyebrow">Search Demand vs. Current Coverage</span>
+    <h2>High-intent patient searches <em>where SPARSH has no presence</em></h2>
+    <p class="sub">These are active search queries from patients researching treatment decisions - the highest-value audience on YouTube. SPARSH&apos;s clinical strength in orthopaedics, spine, and cardiac care maps directly to the queries below.</p>
+
+    <div style="margin-bottom:14px; background:var(--white); border:1px solid var(--border); border-radius:12px; padding:14px 18px;">
+      <div style="font-size:13px;color:var(--ink);"><strong>Decision Moment:</strong> Each query below is a patient already evaluating procedures, costs, or surgeons. Keyword-aligned explainers targeting these searches convert existing demand into appointment intent — no new ad spend required.</div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Patient Search Query</th><th>SPARSH Coverage</th><th>Recommended Content</th></tr></thead>
+        <tbody>
+          <tr><td class="fw7">Knee replacement recovery time</td><td><span class="badge b-red">Not covered</span></td><td style="font-size:12px;color:var(--ink-light);">"Week 1 to Month 3 — what recovery after knee replacement really looks like at SPARSH"</td></tr>
+          <tr><td class="fw7">Heart surgery Bangalore</td><td><span class="badge b-amber">Partial</span></td><td style="font-size:12px;color:var(--ink-light);">"Heart bypass at SPARSH - a patient&apos;s complete journey from day 0 to day 90"</td></tr>
+          <tr><td class="fw7">Stroke first aid / what to do</td><td><span class="badge b-amber">Limited</span></td><td style="font-size:12px;color:var(--ink-light);">"Stroke - what to do in the first 60 minutes" expanded into a structured series</td></tr>
+          <tr><td class="fw7">Physiotherapy after knee surgery</td><td><span class="badge b-red">Not covered</span></td><td style="font-size:12px;color:var(--ink-light);">"Week 1 to Month 3 - physiotherapy after knee replacement at SPARSH"</td></tr>
+          <tr><td class="fw7">Cancer treatment Bangalore</td><td><span class="badge b-red">Not covered</span></td><td style="font-size:12px;color:var(--ink-light);">"Cancer at SPARSH - your first 30 days explained" plus type-specific explainers</td></tr>
+          <tr><td class="fw7">Best spine surgeon Bangalore</td><td><span class="badge b-amber">Weak / 2019 lectures reach surgeons not patients</span></td><td style="font-size:12px;color:var(--ink-light);">New patient-facing Dr. Sharan Patil Q&amp;A series - 10 videos answering the questions a spine patient (not a surgeon) is searching</td></tr>
+          <tr><td class="fw7">ಮಂಡಿ ನೋವು (Kannada knee pain)</td><td><span class="badge b-red">Not covered</span></td><td style="font-size:12px;color:var(--ink-light);">Kannada knee replacement explainer - no peer hospital is active in this language today</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px;background:var(--ink);border-radius:14px;padding:18px 22px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--rust-light);margin-bottom:8px;">Regional Language: An Open Window</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.85);line-height:1.6;">SPARSH is in Bengaluru. No peer hospital produces Kannada health content at scale. The opportunity to be first is open now — test it with a single knee-pain explainer before committing to a full series.</div>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- 5 PRIORITIES -->
+<section style="background:var(--white);">
+  <div class="page">
+    <span class="eyebrow">Strategic Priorities</span>
+    <h2>5 Decisions That <em>Change the Trajectory</em></h2>
+    <p class="sub">Sequenced by impact and ease of execution. The first three can begin this month with resources already in place.</p>
+
+    <div class="actions">
+      <div class="action">
+        <div class="action-num">01</div>
+        <div>
+          <div class="action-title">Phase out the &quot;Hospital | Dr | Specialty&quot; doctor-intro factory and redirect that production slot into procedure-led patient content.</div>
+          <div class="action-desc">60% of uploads follow the doctor-intro format, averaging 233-900 views per video. Redirecting that same production capacity to procedure-led content — &quot;What happens during a SPARSH knee replacement, with Dr. [Name]&quot; — keeps the clinician-trust signal and adds the search hook. 16 focused long-form videos plus 5 Shorts/week from existing footage generates more total views than the current 52-video calendar at the same production cost.</div>
+        </div>
+        <div class="action-impact impact-high">🔴 Start now</div>
+      </div>
+      <div class="action">
+        <div class="action-num">02</div>
+        <div>
+          <div class="action-title">Launch YouTube Shorts at five per week, sourced from existing Dr. Sharan Patil and procedure footage at zero new shoot cost.</div>
+          <div class="action-desc">SPARSH has zero Shorts — the largest single gap in the catalog versus peers. Dr. Patil&apos;s lectures, 3D Printing Lab clips, and testimonial b-roll can be cut into 30-60 second Shorts immediately, at zero new shoot cost. Five per week activates Shorts discovery and generates subscriber growth without a new production cycle.</div>
+        </div>
+        <div class="action-impact impact-high">🔴 Start now</div>
+      </div>
+
+      <div style="background:var(--alt); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin:2px 0;">
+        <div style="font-size:13px;color:var(--ink);"><strong>On SPARSH Vachana:</strong> Operationally established. No flagship documentary yet. Development now → Q3 2026 release. Four to six patient stories, surgeon-narrated, 25-40 minutes.</div>
+      </div>
+
+      <div class="action">
+        <div class="action-num">03</div>
+        <div>
+          <div class="action-title">Produce the SPARSH Vachana flagship documentary this quarter - the channel&apos;s category-of-one content asset.</div>
+          <div class="action-desc">SPARSH Vachana is the equivalent of Narayana&apos;s InsidER moat — no peer hospital can replicate it. The promo edit today (3K-8K views) demonstrates audience interest. A 25-40 minute documentary with four to six patient journeys converts an existing programme into a flagship series supporting international patient acquisition, surgeon branding, and ESG positioning simultaneously.</div>
+        </div>
+        <div class="action-impact impact-high">🔴 High priority</div>
+      </div>
+      <div class="action">
+        <div class="action-num">04</div>
+        <div>
+          <div class="action-title">Add stage-matched CTAs to all 1,046 video descriptions and end screens.</div>
+          <div class="action-desc">9.75M lifetime views are not currently routed to a next step. The fix is not a single booking link — it is a stage-matched description block: Stage 1 videos link to the procedure explainer ("Watch: what this surgery looks like"); Stage 2 videos link to patient stories ("See how others recovered"); Stage 3 videos carry the consultation link and WhatsApp number. One editorial pass across the catalog; compounding returns on every future view.</div>
+        </div>
+        <div class="action-impact impact-med">🟡 30-day build</div>
+      </div>
+      <div class="action">
+        <div class="action-num">05</div>
+        <div>
+          <div class="action-title">Produce one Kannada-language video, measure the response, and build a regional language roadmap from there.</div>
+          <div class="action-desc">SPARSH is in Bengaluru. No peer hospital produces Kannada health content at scale. A single knee replacement explainer — the highest-intent local search — is a low-investment test before committing to a full regional language strategy. Tamil and Telugu follow based on what the Kannada test shows.</div>
+        </div>
+        <div class="action-impact impact-med">🟡 30-day test</div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- 10 VIDEO IDEAS -->
+<section style="background:var(--cream);">
+  <div class="page">
+    <span class="eyebrow">10 Videos That Would Move the Channel</span>
+    <h2>High-impact video ideas <em>mapped to search demand and patient need</em></h2>
+    <p class="sub">Each is grounded in a verified search gap and a specific patient decision moment. None require new facilities or new talent - only reprioritised production time.</p>
+
+    <div class="ideas-grid">
+      <div class="idea-card">
+        <div class="idea-num">01 · Awareness</div>
+        <div class="idea-title">"Do I need knee replacement? 5 signs your pain needs a specialist"</div>
+        <div class="idea-why">Symptom-led search is the highest-volume entry point for orthopaedic patients. A Stage 1 explainer answering this question earns trust before the patient has shortlisted any hospital — and routes them to SPARSH's procedure content as the next step. CTA: "Watch: What knee replacement looks like at SPARSH →"</div>
+        <span class="idea-tag" style="background:var(--alt);color:var(--ink);">Awareness · Orthopaedics</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">02 · Decision</div>
+        <div class="idea-title">"Heart bypass surgery at SPARSH - a patient&apos;s complete journey"</div>
+        <div class="idea-why">Cardiac patient narratives consistently outperform doctor introductions. A single full-journey video — day 0 admission through day 90 recovery — ranks for procedural and outcome-based searches and converts considering patients into appointment requests.</div>
+        <span class="idea-tag" style="background:#eef3ec;color:#3d7a40;">Decision · Cardiology</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">03 · Decision</div>
+        <div class="idea-title">"SPARSH Vachana - the full documentary"</div>
+        <div class="idea-why">The flagship asset. No peer hospital has an equivalent programme to film. Compounds international patient interest, surgeon credibility, and ESG positioning in a single production effort.</div>
+        <span class="idea-tag" style="background:#eef3ec;color:#3d7a40;">Decision · Flagship</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">04 · Awareness</div>
+        <div class="idea-title">"Stroke - what to do in the first 60 minutes"</div>
+        <div class="idea-why">Time-is-brain content is high-intent and frequently searched. High shareability among family members of at-risk patients extends organic reach beyond SPARSH&apos;s existing audience.</div>
+        <span class="idea-tag" style="background:var(--alt);color:var(--ink);">Awareness · Neurology</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">05 · Post-Care</div>
+        <div class="idea-title">"Week 1 to Month 3 - physiotherapy after knee replacement at SPARSH"</div>
+        <div class="idea-why">Post-op recovery content has the highest watch time of any health category. No peer hospital has built a structured knee replacement recovery series — direct impact on patient retention, referral, and review activity.</div>
+        <span class="idea-tag" style="background:var(--alt);color:var(--ink);">Post-Care · Orthopaedics</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">06 · Awareness</div>
+        <div class="idea-title">"Dr. Sharan Patil - when does a spine patient need surgery vs physio?"</div>
+        <div class="idea-why">The highest-volume question from spine patients, answered by SPARSH&apos;s most recognisable spine authority. A current-year Q&amp;A refreshes Dr. Patil&apos;s legacy authority with a patient-facing search asset that compounds for years.</div>
+        <span class="idea-tag" style="background:var(--rust-pale);color:var(--rust-dk);">Awareness · Spine</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">07 · Decision</div>
+        <div class="idea-title">"International patient guide - why patients fly to SPARSH"</div>
+        <div class="idea-why">Mauritius and Bangladesh testimonials run 3-5x the doctor-intro average. A consolidated international-patient guide converts that organic strength into a structured medical-tourism asset aligned with the segment that already over-indexes on the channel.</div>
+        <span class="idea-tag" style="background:#eef3ec;color:#3d7a40;">Decision · Medical Tourism</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">08 · Awareness</div>
+        <div class="idea-title">"Cancer at SPARSH - your first 30 days explained"</div>
+        <div class="idea-why">Oncology patients research more thoroughly than any other category. SPARSH has no dedicated oncology series. A first-30-days explainer captures the highest-anxiety window and ranks across diagnosis, staging, and initial treatment queries simultaneously.</div>
+        <span class="idea-tag" style="background:var(--alt);color:var(--ink);">Awareness · Oncology</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">09 · Awareness</div>
+        <div class="idea-title">"ಮಂಡಿ ನೋವು ಶಸ್ತ್ರಚಿಕಿತ್ಸೆ - Kannada knee replacement explainer"</div>
+        <div class="idea-why">SPARSH is in Bengaluru. Knee pain is the highest-intent local search. No peer hospital is active in Kannada. One video is a meaningful first-mover test before any broader regional language investment.</div>
+        <span class="idea-tag" style="background:#eef3ec;color:#3d7a40;">Awareness · Kannada</span>
+      </div>
+      <div class="idea-card">
+        <div class="idea-num">10 · Awareness</div>
+        <div class="idea-title">"Inside SPARSH&apos;s 3D printing lab - how custom-design bones are built"</div>
+        <div class="idea-why">India&apos;s First 3D Printing Lab is a verifiable claim no peer can match. A behind-the-scenes process video — CT scan to printed implant to surgical use — extends an existing PR moat into a recurring content asset at a specificity peers cannot replicate.</div>
+        <span class="idea-tag" style="background:var(--rust-pale);color:var(--rust-dk);">Awareness · Technology</span>
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>
+
+
+<!-- 90-DAY ROADMAP -->
+<section style="background:var(--ink); padding:clamp(40px,5vw,68px) clamp(20px,4vw,48px);">
+  <div class="page">
+    <span class="eyebrow" style="color:var(--rust-light);">Execution Plan</span>
+    <h2 style="color:#fff; margin-bottom:6px;">90-Day Growth <em style="color:var(--rust-light);">Roadmap</em></h2>
+    <p class="sub" style="color:rgba(255,255,255,.6); margin-bottom:32px;">Three sequential phases. The first creates the conditions for the second. The third compounds what the second builds.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+
+      <!-- Phase 1 -->
+      <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-top:3px solid var(--rust); border-radius:14px; padding:22px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.18em; color:var(--rust-light); margin-bottom:6px;">Days 0-30</div>
+        <div style="font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:#fff; margin-bottom:16px;">Fix the Foundation</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--rust-light); font-weight:700; flex-shrink:0; min-width:70px;">PHASE OUT</span>The &quot;Hospital | Dr | Specialty&quot; doctor-intro format from the standard upload calendar</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:#f2c97a; font-weight:700; flex-shrink:0; min-width:70px;">REDIRECT</span>Production calendar — 16 procedure-led long-form videos per month + 5 Shorts/week from existing footage, replacing doctor-intro format</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--sage); font-weight:700; flex-shrink:0; min-width:70px;">LAUNCH</span>YouTube Shorts at 5 per week, sourced from existing Dr. Sharan Patil and procedure footage</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--sage); font-weight:700; flex-shrink:0; min-width:70px;">ADD</span>Stage-matched CTAs across all 1,046 video descriptions — Stage 1 → next procedure video · Stage 2 → patient stories · Stage 3 → consultation form + WhatsApp</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--sage); font-weight:700; flex-shrink:0; min-width:70px;">PRE-PROD</span>SPARSH Vachana documentary in pre-production - patient selection, surgeon interviews scheduled</div>
+        </div>
+        <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:var(--rust-light); margin-bottom:6px;">Expected signal by Day 30</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.7);">↑ Average views per video as watch time improves · ↑ Shorts impressions and subscriber surface · CTA-driven booking inquiries from existing catalog</div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-top:3px solid var(--sage); border-radius:14px; padding:22px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.18em; color:var(--rust-light); margin-bottom:6px;">Days 30-60</div>
+        <div style="font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:#fff; margin-bottom:16px;">Scale What Works</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--sage); font-weight:700; flex-shrink:0; min-width:70px;">GREENLIGHT</span>SPARSH Vachana documentary into full production - Q3 2026 release window</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--sage); font-weight:700; flex-shrink:0; min-width:70px;">BUILD</span>Procedure-first video series across knee, hip, spine, and heart - one explainer per week</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:#f2c97a; font-weight:700; flex-shrink:0; min-width:70px;">TEST</span>One Kannada-language video - knee replacement explainer - measure CTR, watch time, subscriber response</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--sage); font-weight:700; flex-shrink:0; min-width:70px;">BUILD</span>Keyword-optimised title and description templates for procedures, testimonials, and post-op series</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--sage); font-weight:700; flex-shrink:0; min-width:70px;">LAUNCH</span>International patient testimonial series - structured by country, surgeon-narrated</div>
+        </div>
+        <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:var(--rust-light); margin-bottom:6px;">Expected signal by Day 60</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.7);">↑ CTR on procedure content · ↑ Search impressions across orthopaedic queries · ↑ Subscriber growth rate beginning to recover</div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-top:3px solid rgba(255,255,255,.5); border-radius:14px; padding:22px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.18em; color:var(--rust-light); margin-bottom:6px;">Days 60-90</div>
+        <div style="font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:#fff; margin-bottom:16px;">Compound Growth</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:#fff; font-weight:700; flex-shrink:0; min-width:70px;">RELEASE</span>SPARSH Vachana documentary - flagship launch with cross-channel amplification</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:#fff; font-weight:700; flex-shrink:0; min-width:70px;">EXPAND</span>Regional language rollout - Tamil and Telugu - informed by Kannada test data and patient catchment</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:#fff; font-weight:700; flex-shrink:0; min-width:70px;">LAUNCH</span>Post-op care series across SPARSH&apos;s top five procedures - 4 videos each, surgeon and physio-led</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:#fff; font-weight:700; flex-shrink:0; min-width:70px;">BUILD</span>Oncology explainer series - one cancer type per video, ranking across diagnosis-stage queries</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.8); display:flex; gap:8px; align-items:flex-start;"><span style="color:#fff; font-weight:700; flex-shrink:0; min-width:70px;">PUBLISH</span>Medical tourism content calendar - international patient guide, country-by-country</div>
+        </div>
+        <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:var(--rust-light); margin-bottom:6px;">Target outcomes at Day 90</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.7);">Est. monthly growth: ~0.25% → 1%+ · Avg views/video: 9.3K → 25K+ · V:S ratio trajectory toward 8%+ · SPARSH Vachana documentary released</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div class="cta-in">
+    <div>
+      <div class="cta-h">Busy marketing.<br><em>Quiet OPD?</em></div>
+      <p class="cta-p">SPARSH has 435K subscribers, a category-of-one charitable surgery programme, India&apos;s First 3D Printing Lab, and an over-indexing international patient base. Not six services. One system.</p>
+      <p style="font-size:16px;color:rgba(255,255,255,.85);margin-top:16px;font-style:italic;max-width:520px;">Would it be useful to walk through what a sequenced 90-day fix looks like in a 15-minute call?</p>
+      <div style="margin-top:12px;display:flex;gap:20px;flex-wrap:wrap;">
+        <span style="font-weight:700;color:var(--rust-light);font-size:14px;">info@qlarify.health</span>
+        <span style="font-weight:600;color:rgba(255,255,255,.65);font-size:14px;">+91 81474 10751</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;flex-shrink:0;">
+      <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:18px 22px;max-width:280px;text-align:right;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.4);margin-bottom:8px;">Why Qlarify</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.85);line-height:1.6;">10+ years inside hospital marketing teams. 17+ hospital partnerships. Manipal, Narayana, Sparsh, KIMS, Sakra World, Rainbow, Gleneagles.</div>
+        <div style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--rust-light);">Activity ≠ outcomes.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div><!-- end tab-full -->
+
+<!-- FOOTER -->
+<footer>
+  <svg viewBox="0 0 240 90" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="4" width="44" height="44" rx="3" ry="3" fill="#1a4a6b"/>
+    <rect x="13" y="12" width="26" height="27" rx="3" ry="3" fill="#f5f5f5"/>
+    <line x1="44" y1="46" x2="57" y2="61" stroke="#1a4a6b" stroke-width="7" stroke-linecap="round"/>
+    <text x="62" y="38" font-family="'DM Sans',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="1" fill="#1a4a6b">LARIFY</text>
+    <text x="66" y="62" font-family="'DM Sans',Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="6" fill="#f07030">HEALTH</text>
+  </svg>
+  <span class="foot-copy">SPARSH Hospital · YouTube Audit · April 2026 · qlarify.health</span>
+</footer>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-tab="'+tab+'"]').classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
