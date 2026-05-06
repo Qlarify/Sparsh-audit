@@ -178,9 +178,20 @@
     .btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,.2); }
 
     /* FOOTER */
-    footer { background:var(--cream); border-top:1px solid var(--border); padding:24px clamp(20px,4vw,48px); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
-    footer svg { height:30px; width:auto; }
-    .foot-copy { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--ink-light); letter-spacing:.08em; }
+    footer { background:var(--ink); padding:0; }
+    .foot-main { display:grid; grid-template-columns:1fr 1fr 1fr; gap:32px; padding:40px clamp(24px,4vw,60px) 32px; align-items:start; }
+    .foot-logo svg { height:36px; width:auto; }
+    .foot-tagline { font-family:'Playfair Display',serif; font-size:13px; color:rgba(255,255,255,.5); font-style:italic; margin-top:10px; line-height:1.5; }
+    .foot-col-label { font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.18em; color:var(--rust); margin-bottom:10px; }
+    .foot-contact a { display:block; font-size:13px; color:rgba(255,255,255,.85); text-decoration:none; margin-bottom:5px; }
+    .foot-contact a:hover { color:#fff; }
+    .foot-meta-row { display:flex; flex-direction:column; gap:5px; }
+    .foot-meta-row span { font-size:12px; color:rgba(255,255,255,.55); line-height:1.5; }
+    .foot-meta-row strong { color:rgba(255,255,255,.82); font-weight:600; }
+    .foot-bar { border-top:1px solid rgba(255,255,255,.08); padding:14px clamp(24px,4vw,60px); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+    .foot-copy { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(255,255,255,.28); letter-spacing:.08em; }
+    .foot-sig { font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(240,112,48,.5); letter-spacing:.06em; }
+    @media(max-width:640px){ .foot-main { grid-template-columns:1fr; gap:24px; } }
 
     /* HEALTH BADGE */
     .yt-health { display:inline-flex; align-items:center; gap:6px; background:#eef3ec; border:1px solid #8FA68B; color:#3d7a40; padding:4px 12px; border-radius:100px; font-size:11px; font-weight:700; margin-left:12px; }
@@ -627,7 +638,6 @@
       <div style="display:flex;flex-direction:column;gap:14px;align-items:stretch;min-width:280px;max-width:320px;">
         <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:20px 22px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.35);margin-bottom:10px;">Next step</div>
-          <p style="font-size:14px;color:rgba(255,255,255,.88);line-height:1.55;margin:0 0 14px;font-style:italic;">If the diagnosis is clear enough — would it be useful to walk through a 180-day fix in 15 minutes?</p>
           <div style="font-weight:700;color:var(--rust-light);font-size:14px;">info@qlarify.health</div>
           <div style="font-weight:600;color:rgba(255,255,255,.65);font-size:13px;margin-top:4px;">+91 81474 10751</div>
         </div>
@@ -1646,8 +1656,7 @@
     <div>
       <div class="cta-h">Busy marketing.<br><em>Quiet OPD?</em></div>
       <p class="cta-p">SPARSH has 435K subscribers, a category-of-one charitable surgery programme, India&apos;s First 3D Printing Lab, and an over-indexing international patient base. Not six services. One system.</p>
-      <p style="font-size:16px;color:rgba(255,255,255,.85);margin-top:16px;font-style:italic;max-width:520px;">Would it be useful to walk through what a sequenced 180-day fix looks like in a 15-minute call?</p>
-      <div style="margin-top:12px;display:flex;gap:20px;flex-wrap:wrap;">
+<div style="margin-top:12px;display:flex;gap:20px;flex-wrap:wrap;">
         <span style="font-weight:700;color:var(--rust-light);font-size:14px;">info@qlarify.health</span>
         <span style="font-weight:600;color:rgba(255,255,255,.65);font-size:14px;">+91 81474 10751</span>
       </div>
@@ -1667,14 +1676,47 @@
 
 <!-- FOOTER -->
 <footer>
-  <svg viewBox="0 0 240 90" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="4" width="44" height="44" rx="3" ry="3" fill="#1a4a6b"/>
-    <rect x="13" y="12" width="26" height="27" rx="3" ry="3" fill="#f5f5f5"/>
-    <line x1="44" y1="46" x2="57" y2="61" stroke="#1a4a6b" stroke-width="7" stroke-linecap="round"/>
-    <text x="62" y="38" font-family="'DM Sans',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="1" fill="#1a4a6b">LARIFY</text>
-    <text x="66" y="62" font-family="'DM Sans',Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="6" fill="#f07030">HEALTH</text>
-  </svg>
-  <span class="foot-copy">SPARSH Hospital · YouTube Audit · April 2026 · qlarify.health</span>
+  <div class="foot-main">
+
+    <!-- Col 1: Logo + tagline -->
+    <div class="foot-logo">
+      <svg viewBox="0 0 240 90" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="44" height="44" rx="3" ry="3" fill="#f07030"/>
+        <rect x="13" y="12" width="26" height="27" rx="3" ry="3" fill="#fff"/>
+        <line x1="44" y1="46" x2="57" y2="61" stroke="#f07030" stroke-width="7" stroke-linecap="round"/>
+        <text x="62" y="38" font-family="'DM Sans',Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="1" fill="#ffffff">LARIFY</text>
+        <text x="66" y="62" font-family="'DM Sans',Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="6" fill="rgba(255,255,255,.45)">HEALTH</text>
+      </svg>
+      <div class="foot-tagline">Video isn't a branding exercise.<br>It's a decision support system.</div>
+    </div>
+
+    <!-- Col 2: Contact -->
+    <div>
+      <div class="foot-col-label">Get in touch</div>
+      <div class="foot-contact">
+        <a href="mailto:info@qlarify.health">info@qlarify.health</a>
+        <a href="tel:+918147410751">+91 81474 10751</a>
+        <a href="https://qlarify.health" target="_blank">qlarify.health</a>
+      </div>
+    </div>
+
+    <!-- Col 3: Audit metadata -->
+    <div>
+      <div class="foot-col-label">About this report</div>
+      <div class="foot-meta-row">
+        <span><strong>Hospital</strong> SPARSH Hospital, Bangalore</span>
+        <span><strong>Scope</strong> YouTube channel · 1,046 videos</span>
+        <span><strong>Prepared by</strong> Qlarify Health</span>
+        <span><strong>Date</strong> April 2026</span>
+        <span><strong>Methodology</strong> Content sampling &amp; categorisation across active upload period. Competitor figures sourced via vidIQ (November 2025). All projections are estimates.</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="foot-bar">
+    <span class="foot-copy">© 2026 Qlarify Health. Confidential — prepared exclusively for SPARSH Hospital.</span>
+    <span class="foot-sig">Activity ≠ outcomes.</span>
+  </div>
 </footer>
 
 <script>
